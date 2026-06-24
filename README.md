@@ -22,6 +22,6 @@
 | PlayStation 4 | 9.00| 
 | PlayStation 5 | N/A|
 
-### Limitations
+## Limitations
 * Newer versions of webkit on PlayStation 4 [11.5x-latest] and 5 [9.00-latest] redesigned how CSSFontFace get/set properties and introduced m_propertiesOrCSSConnection, due to that and other factors it causes loss of read/write stopping it from being usable on firmwares higher than stated above.
 * On PlayStation 5 vtable checks and ASLR stop it from being usable at all unless a workaround is found.
