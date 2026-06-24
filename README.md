@@ -29,3 +29,11 @@
 * On PlayStation 5, vtable checks and WebKit ASLR prevent this repository's chain from working unless a separate ASLR defeat and vtable recovery workaround is found.
 
 Technical writeup: https://linearfox.com/blog/cssfontface-uaf-playstation
+
+# Collaborators / Research References
+
+[ufm42](https://github.com/ufm42): Bug Research, Full Chain Exploit Development.  
+[Nathan Fargo](https://github.com/ntfargo) aka @ntfargo: Bug Research, Writeup, Exploit Development.   
+[Dr.Yenyen](https://github.com/DrYenyen): Testing.  
+[Hacking the PS4 by CTurt2015](cturt.github.io/ps4.html)    
+[Old PS5 Webkit contributors. (2022)](github.com/ChendoChap/PS5-Webkit-Execution)
