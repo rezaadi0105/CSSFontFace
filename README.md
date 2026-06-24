@@ -35,5 +35,5 @@ Technical writeup: https://linearfox.com/blog/cssfontface-uaf-playstation
 [ufm42](https://github.com/ufm42): Bug Research, Full Chain Exploit Development.  
 [Nathan Fargo](https://github.com/ntfargo) aka @ntfargo: Bug Research, Writeup, Exploit Development.   
 [Dr.Yenyen](https://github.com/DrYenyen): Testing.  
-Hacking the PS4 by CTurt (2015) cturt.github.io/ps4.html    
-Old PS5 Webkit contributors. (2022) github.com/ChendoChap/PS5-Webkit-Execution
+Hacking the PS4 by CTurt (2015) https://cturt.github.io/ps4.html) 
+Old PS5 Webkit contributors. (2022) https://github.com/ChendoChap/PS5-Webkit-Execution
