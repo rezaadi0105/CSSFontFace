@@ -78,15 +78,15 @@ class V904 extends V900 {
 
 class V950 extends Offsets {
   static get version() { return "9.50"; }
-  get wk_CSSFontFace_sizeof() { return 0xb8; }// todo
-  get wk_CSSFontFace_m_families() { return 0x10; }// todo
-  get wk_CSSFontFace_m_featureSettings_m_buffer() { return 0x28; }// todo
-  get wk_CSSFontFace_m_featureSettings_m_size() { return 0x30; }// todo
-  get wk_CSSFontFace_m_featureSettings_m_capacity() { return 0x34; }// todo
-  get wk_CSSFontFace_m_clients() { return 0x60; }// todo
-  get wk_CSSFontFace_m_wrapper() { return 0x68; }// todo
-  get wk_CSSFontFace_m_status() { return 0x82; }// todo
-  get wk_CSSFontFace_m_thread() { return 0xa8; }// todo
+  get wk_CSSFontFace_sizeof() { return 0xb8; }
+  get wk_CSSFontFace_m_families() { return 0x10; }
+  get wk_CSSFontFace_m_featureSettings_m_buffer() { return 0x28; }
+  get wk_CSSFontFace_m_featureSettings_m_size() { return 0x30; }
+  get wk_CSSFontFace_m_featureSettings_m_capacity() { return 0x34; }
+  get wk_CSSFontFace_m_clients() { return 0x60; }
+  get wk_CSSFontFace_m_wrapper() { return 0x68; }
+  get wk_CSSFontFace_m_status() { return 0x82; }
+  get wk_CSSFontFace_m_thread() { return 0xa8; }
 
   get wk_RET() { return 0x11d0746n; }
   get wk_LEAVE_RET() { return 0x147d37n; }
@@ -132,15 +132,15 @@ class V960 extends V950 {
 
 class V1000 extends Offsets {
   static get version() { return "10.00"; }
-  get wk_CSSFontFace_sizeof() { return 0xb8; }// todo
-  get wk_CSSFontFace_m_families() { return 0x10; }// todo
-  get wk_CSSFontFace_m_featureSettings_m_buffer() { return 0x28; }// todo
-  get wk_CSSFontFace_m_featureSettings_m_size() { return 0x30; }// todo
-  get wk_CSSFontFace_m_featureSettings_m_capacity() { return 0x34; }// todo
-  get wk_CSSFontFace_m_clients() { return 0x58; }// todo
-  get wk_CSSFontFace_m_wrapper() { return 0x60; }// todo
-  get wk_CSSFontFace_m_status() { return 0x7a; }// todo
-  get wk_CSSFontFace_m_thread() { return 0xa8; }// todo
+  get wk_CSSFontFace_sizeof() { return 0xb8; }
+  get wk_CSSFontFace_m_families() { return 0x10; }
+  get wk_CSSFontFace_m_featureSettings_m_buffer() { return 0x28; }
+  get wk_CSSFontFace_m_featureSettings_m_size() { return 0x30; }
+  get wk_CSSFontFace_m_featureSettings_m_capacity() { return 0x34; }
+  get wk_CSSFontFace_m_clients() { return 0x58; }
+  get wk_CSSFontFace_m_wrapper() { return 0x60; }
+  get wk_CSSFontFace_m_status() { return 0x7a; }
+  get wk_CSSFontFace_m_thread() { return 0xa8; }
   get wk_RET() { return 0x25da7c1n; }
   get wk_LEAVE_RET() { return 0x2e4ce35n; }
   get wk_POP_R8_RET() { return 0x202b671n; }
@@ -184,7 +184,7 @@ class V1001 extends V1000 {
 class V1050 extends Offsets {
   static get version() { return "10.50"; }
   get wk_CSSFontFace_sizeof() { return 0xb8; } // todo
-  get wk_CSSFontFace_m_families() { return 0x10; }
+  get wk_CSSFontFace_m_families() { return 0x10; }// todo
   get wk_CSSFontFace_m_featureSettings_m_buffer() { return 0x28; } // todo
   get wk_CSSFontFace_m_featureSettings_m_size() { return 0x30; } // todo
   get wk_CSSFontFace_m_featureSettings_m_capacity() { return 0x34; } // todo
