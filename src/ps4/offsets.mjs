@@ -69,7 +69,7 @@ class V900 extends Offsets {
 }
 
 class V903 extends V900 {
-  static get version() {return "9.03" }
+  static get version() { return "9.03" }
 }
 
 class V904 extends V900 {
@@ -111,11 +111,11 @@ class V950 extends Offsets {
   get wk_PUSH_RAX_POP_RBP_RET() { return 0x1d3677bn; }
   get wk_PUSH_RAX_PUSH_RBP_RET() { return 0x2c7bd07n; }
   get wk_POP_RAX_MOV_RAX_QWORD_PTR_RDI_JMP_QWORD_PTR_RAX_8() { return 0x16a4e82n; }
-  get wk_PUSH_RBP_MOV_RBP_RSP_MOV_RAX_QWORD_PTR_RDI_CALL_QWORD_PTR_RAX_20() { return 0x141d420n; }
+  get wk_PUSH_RBP_MOV_RBP_RSP_MOV_RAX_QWORD_PTR_RDI_CALL_QWORD_PTR_RAX_20() { return 0x1e41210n; }
   get wk_MOV_RSI_QWORD_PTR_RAX_10_CALL_QWORD_PTR_RAX_18() { return 0x1f02710n; }
   get wk_PUSH_RSI_JMP_QWORD_PTR_RAX() { return 0x2c06ef1n; }
-  get wk_MOV_RDI_RSI_30_MOV_RAX_QWORD_PTR_RDI_CALL_QWORD_PTR_RAX_38() { return 0x9f521en; }
-  get wk_expm1_builtin() { return 0x1d23560n; }// todo
+  get wk_MOV_RDI_RSI_30_MOV_RAX_QWORD_PTR_RDI_CALL_QWORD_PTR_RAX_38() { return 0xedf8b4n; }
+  get wk_expm1_builtin() { return 0x0n; }// todo
   get wk___imp___error() { return 0x2F91CE0; }
   get wk___imp_strerror() { return 0x2F91D00; }
   get k__error() { return 0xBB60n; }
@@ -222,7 +222,7 @@ class V1050 extends Offsets {
   get wk_MOV_RSI_QWORD_PTR_RAX_10_CALL_QWORD_PTR_RAX_18() { return 0x20e4350n; }
   get wk_PUSH_RSI_JMP_QWORD_PTR_RAX() { return 0x299224en; }
   get wk_MOV_RDI_RSI_30_MOV_RAX_QWORD_PTR_RDI_CALL_QWORD_PTR_RAX_38() { return 0x1368714n; }
-  get wk_expm1_builtin() { return 0x1d23560n; }// todo
+  get wk_expm1_builtin() { return 0x0n; }// todo
   get wk___imp___error() { return 0x36d5be8; }
   get wk___imp_strerror() { return 0x36D5C18; }
   get k__error() { return 0x14F40n; }
@@ -271,14 +271,14 @@ class V1100 extends Offsets {
   get wk_MOV_QWORD_PTR_RDI_RAX_RET() { return 0x1b890afn; }
   get wk_MOV_RAX_QWORD_PTR_RDI_RET() { return 0x1183340n; }
   get wk_PUSH_RAX_POP_RBP_RET() { return 0x1fe83a9n; }
-  get wk_PUSH_RAX_PUSH_RBP_RET() { return 0x29ced40n; } // todo
-  get wk_PUSH_RBP_POP_RAX_RET() { return 0xb3b5d5n; } // push rbp; rol ch, 0xfb; pop rax; ret; todo
+  get wk_PUSH_RAX_PUSH_RBP_RET() { return 0x0n; } // todo
+  get wk_PUSH_RBP_POP_RAX_RET() { return 0x0n; } // push rbp; rol ch, 0xfb; pop rax; ret; todo
   get wk_POP_RAX_MOV_RAX_QWORD_PTR_RDI_JMP_QWORD_PTR_RAX_8() { return 0x0n; } //todo, no 8. but 10 at 0x70c693
-  get wk_PUSH_RBP_MOV_RBP_RSP_MOV_RAX_QWORD_PTR_RDI_CALL_QWORD_PTR_RAX_20() { return 0x2f1890n; }//
+  get wk_PUSH_RBP_MOV_RBP_RSP_MOV_RAX_QWORD_PTR_RDI_CALL_QWORD_PTR_RAX_20() { return 0x0n; }// todo
   get wk_MOV_RSI_QWORD_PTR_RAX_10_CALL_QWORD_PTR_RAX_18() { return 0x20ea440n; }//
   get wk_PUSH_RSI_JMP_QWORD_PTR_RAX() { return 0x0n; } // todo
-  get wk_MOV_RDI_RSI_30_MOV_RAX_QWORD_PTR_RDI_CALL_QWORD_PTR_RAX_38() { return 0x354516n; }//
-  get wk_expm1_builtin() { return 0x1d23560n; }// todo
+  get wk_MOV_RDI_RSI_30_MOV_RAX_QWORD_PTR_RDI_CALL_QWORD_PTR_RAX_38() { return 0x1c60dc4n; }
+  get wk_expm1_builtin() { return 0x0n; }// todo
   get wk___imp___error() { return 0x36e1c68; }
   get wk___imp_strerror() { return 0x36e1c98; }
   get k__error() { return 0x3370n; }
@@ -324,8 +324,8 @@ class V1102 extends Offsets {
   get wk_PUSH_RBP_MOV_RBP_RSP_MOV_RAX_QWORD_PTR_RDI_CALL_QWORD_PTR_RAX_20() { return 0x0n; }// todo
   get wk_MOV_RSI_QWORD_PTR_RAX_10_CALL_QWORD_PTR_RAX_18() { return 0x20ea450n; }
   get wk_PUSH_RSI_JMP_QWORD_PTR_RAX() { return 0x0n; } // todo
-  get wk_MOV_RDI_RSI_30_MOV_RAX_QWORD_PTR_RDI_CALL_QWORD_PTR_RAX_38() { return 0x354516n; }
-  get wk_expm1_builtin() { return 0x1d23560n; }// todo
+  get wk_MOV_RDI_RSI_30_MOV_RAX_QWORD_PTR_RDI_CALL_QWORD_PTR_RAX_38() { return 0x192f124n; }
+  get wk_expm1_builtin() { return 0x0n; }// todo
   get wk___imp___error() { return 0x36e1c68; }
   get wk___imp_strerror() { return 0x36e1c98; }
   get k__error() { return 0x3370n; }
@@ -340,7 +340,7 @@ class V1150 extends Offsets {
   get wk_CSSFontFace_m_featureSettings_m_size() { return 0x30; }
   get wk_CSSFontFace_m_featureSettings_m_capacity() { return 0x34; }
   get wk_CSSFontFace_m_clients() { return 0x50; }
-  get wk_CSSFontFace_m_wrapper() { return 0x68; }// todo
+  get wk_CSSFontFace_m_wrapper() { return 0x0; }// todo
   get wk_CSSFontFace_m_status() { return 0x48; }
   get wk_CSSFontFace_m_thread() { return 0x60; }
   get wk_RET() { return 0xe67c21n; }
@@ -365,14 +365,14 @@ class V1150 extends Offsets {
   get wk_MOV_QWORD_PTR_RDI_RAX_RET() { return 0x211774en; }
   get wk_MOV_RAX_QWORD_PTR_RDI_RET() { return 0x161e168n; }
   get wk_PUSH_RAX_POP_RBP_RET() { return 0x1284321; }
-  get wk_PUSH_RAX_PUSH_RBP_RET() { return 0x21f2831n; }
+  get wk_PUSH_RAX_PUSH_RBP_RET() { return 0x0n; } // todo
   get wk_PUSH_RBP_POP_RAX_RET() { return 0x0n; } // push rbp; rol ch, 0xfb; pop rax; ret; todo
   get wk_POP_RAX_MOV_RAX_QWORD_PTR_RDI_JMP_QWORD_PTR_RAX_8() { return 0x0n; } //todo, no 8. but 10 at 0x70c693
   get wk_PUSH_RBP_MOV_RBP_RSP_MOV_RAX_QWORD_PTR_RDI_CALL_QWORD_PTR_RAX_20() { return 0xd406f0n; }
   get wk_MOV_RSI_QWORD_PTR_RAX_10_CALL_QWORD_PTR_RAX_18() { return 0x24bc149n; }
   get wk_PUSH_RSI_JMP_QWORD_PTR_RAX() { return 0x0325291an; }
-  get wk_MOV_RDI_RSI_30_MOV_RAX_QWORD_PTR_RDI_CALL_QWORD_PTR_RAX_38() { return 0x28cf694n; }
-  get wk_expm1_builtin() { return 0x1d23560n; }// todo
+  get wk_MOV_RDI_RSI_30_MOV_RAX_QWORD_PTR_RDI_CALL_QWORD_PTR_RAX_38() { return 0x384434n; }
+  get wk_expm1_builtin() { return 0x0n; }// todo
   get wk___imp___error() { return 0x3CBCC98; }
   get wk___imp_strerror() { return 0x3CBCCA8; }
   get k__error() { return 0x183C0n; }
