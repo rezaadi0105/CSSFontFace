@@ -11,7 +11,7 @@
 
 |               | CSSFontFace |
 | :------------ | :---------- |
-| PlayStation 4 | 6.00-11.50  |
+| PlayStation 4 | 6.00-11.02  |
 | PlayStation 5 | 1.00-8.60   |
 
 * PS5 is also exploitable if ASLR can be defeated, either through a heap-shaping trick or a separate leak bug, and the expected vtable pointer can be recovered before the native crash path.
