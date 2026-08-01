@@ -67,7 +67,7 @@ function jailbreakCountdown() {
 
 function cacheProgress(e) {
     var Percent = (Math.round(e.loaded / e.total * 100));
-    document.title = "Caching: " + Percent + "%";
+    document.title = "Caching, please wait!!: " + Percent + "%";
 }
 
 function displayCacheProgress() {
