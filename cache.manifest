@@ -1,16 +1,15 @@
 CACHE MANIFEST
 # v1
-# Generated on 2026-07-27 14:23:14.314430
+# Generated on 2026-08-11 23:08:07.815758
 
 CACHE:
+favicon.ico
+cache.html
+style.css
 index.html
-includes/joystick.png
-includes/style.css
-includes/script.js
 src/worker.js
 src/lapse.js
 src/misc.js
-src/netctrl.js
 src/workers.js
 src/main.js
 src/payload.bin

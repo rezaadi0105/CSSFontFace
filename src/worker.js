@@ -2,22 +2,13 @@ importScripts("misc.js");
 
 let marker_arr = new Uint32Array(new ArrayBuffer(0x10));
 
-const transfer = [];
 const api = {
   init(name) {
     self.name = name;
 
     version.init();
-    switch (version.console) {
-      case 4:
-        importScripts("ps4/constants.js", "ps4/userland.js");
-        break;
-      case 5:
-        //TODO
-        break;
-      default:
-        throw new Error(`Unsupported console ${version.console}`);
-    }
+
+    importScripts("ps4/constants.js", "ps4/userland.js");
 
     arw.master = new Uint32Array(6);
 
@@ -26,13 +17,10 @@ const api = {
     marker_arr.master = arw.master;
     marker_arr.victim = arw.victim;
 
-    transfer.push(marker_arr.buffer);
-
     return marker_arr;
   },
-  setup(leak_addr, wk_base) {
-    transfer.length = 0;
 
+  setup(leak_addr, wk_base) {
     marker_arr = null;
 
     arw.leak_addr = new BInt(leak_addr);
@@ -44,38 +32,49 @@ const api = {
 
     return true;
   },
+
   register(name, fn) {
     if (typeof fn !== "string") {
-      throw new Error(`${fn} not a string !!`);
+      throw new Error(fn + " not a string !!");
     }
-
     if (name in api) {
-      throw new Error(`${name} already registered !!`);
+      throw new Error(name + " already registered !!");
     }
-
-    api[name] = new Function(`return (${fn})`)();
-
+    api[name] = new Function("return (" + fn + ")")();
     return true;
   },
+
   ping() {
     return "pong";
   },
 };
 
-self.onmessage = async (e) => {
-  const { id, name, args = [] } = e.data || {};
+self.onmessage = function (e) {
+  var id = e.data && e.data.id;
+  var name = e.data && e.data.name;
+  var args = (e.data && e.data.args) || [];
 
   try {
-    const fn = api[name];
-
+    var fn = api[name];
     if (typeof fn !== "function") {
-      throw new Error(`Unknown function ${name} !!`);
+      throw new Error("Unknown function " + name);
     }
 
-    const ret = await fn(...args);
+    var ret = fn.apply(null, args);
 
-    self.postMessage({ id, type: "ret", value: ret }, transfer);
+    if (name === "init" && ret && ret.buffer) {
+      self.postMessage({ id: id, type: "ret", value: ret }, [ret.buffer]);
+    } else {
+      self.postMessage({ id: id, type: "ret", value: ret });
+    }
   } catch (err) {
-    self.postMessage({ id, type: "err", value: err });
+    self.postMessage({
+      id: id,
+      type: "err",
+      value: {
+        message: err && err.message ? err.message : String(err),
+        stack: err && err.stack ? err.stack : "",
+      },
+    });
   }
 };

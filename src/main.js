@@ -8,7 +8,7 @@ function load_script(src, remote = true, transfer = []) {
   });
 }
 
-async function doJb() {
+export async function doJb() {
   await load_script("src/misc.js");
 
   try {
@@ -22,7 +22,7 @@ async function doJb() {
         //TODO
         break;
       default:
-        logger.info(`Unsupported console ${version.console}`);
+        logger.info("Unsupported console " + version.console);
     }
 
     logger.info("===USERLAND===");
@@ -49,12 +49,17 @@ async function doJb() {
         //TODO
         break;
       default:
-        logger.info(`Unsupported console ${version.console}`);
+        logger.info("Unsupported console " + version.console);
     }
 
-    await load_script(`src/${exploitChain}.js`);
+    if (fn.setuid.invoke(0) !== -1) {
+      msgs.innerHTML = "Payload Already Loaded ...";
+      return;
+    }
 
-    logger.info(`===${exploitChain.toUpperCase()}===`);
+    var exploitChain = localStorage.getItem("exploitChain") || "lapse";
+    await load_script("src/" + exploitChain + ".js");
+    logger.info("===" + exploitChain.toUpperCase() + "===");
 
     try {
       if (exploitChain == "lapse") {
@@ -64,19 +69,12 @@ async function doJb() {
         leak_kaddrs();
         double_free_reqs1();
         make_karw();
-
-        // Increase reference counts for the pipes
         inc_karw_pipe_refcnt();
 
         logger.info("Corrupted context cleanup started...");
-
-        // Remove pktinfo pointers
         remove_pktinfo_from_so(pktopts_twins[0]);
-
-        // Remove rthdr pointers
         remove_rthdr_from_so(pktopts_twins[1]);
         remove_rthdr_from_so(rthdr_twins[0]);
-
         logger.info("Corrupted context cleanup completed !!");
       } else {
         init();
@@ -84,19 +82,13 @@ async function doJb() {
         await ucred_triple_free();
         leak_kqueue();
         await make_karw();
-
         inc_karw_pipe_refcnt();
 
         logger.info("Corrupted context cleanup started...");
-
-        // Remove rthdr pointers from triplets
         for (let i = 0; i < triplets.length; i++) {
           remove_rthdr_from_so(triplets[i]);
         }
-
-        // Remove triple freed file from free list
         remove_uaf_file();
-
         logger.info("Corrupted context cleanup completed !!");
       }
     } finally {
@@ -105,28 +97,26 @@ async function doJb() {
 
     find_all_proc();
 
-    // Avoid reapplying if already done
     if (fn.setuid.invoke(0) === -1) {
       jailbreak();
 
-      const kpatches_rsp = await fetch(`src/ps4/patches/${constants.KPATCH}`);
+      const kpatches_rsp = await fetch("src/ps4/patches/" + constants.KPATCH);
       const kpatches_buf = await kpatches_rsp.arrayBuffer();
       const kpatches_u8 = new Uint8Array(kpatches_buf);
-
       kernel_patches(kpatches_u8);
 
       const bin_rsp = await fetch("src/payload.bin");
       const bin_buf = await bin_rsp.arrayBuffer();
       const bin_u8 = new Uint8Array(bin_buf);
-
       load_bin(bin_u8);
-      logger.info("Payload Loaded");
     }
 
+    msgs.innerHTML = "PS4 Exploited And Payload Loaded ...";
     logger.info("===END===");
   } catch (e) {
-    logger.error(e.message);
-    logger.error(e.stack);
-    //mem.free_all();
+    msgs.innerHTML = "Failed to Load! Shutdown Your Console ...";
   }
 }
+
+// Jailbreak
+doJb();

@@ -1,36 +1,50 @@
 //#region Constants
 const logger = {
   seq: 0,
-  verbose: true, // enable for debug logs
+  verbose: true,
+  console: undefined,
+
   info(msg) {
-    this.log(`[+] ${msg}`);
+    this.log("[+] " + msg);
   },
   error(msg) {
-    this.log(`[-] ${msg}`);
+    this.log("[-] " + msg);
   },
   debug(msg) {
     if (this.verbose) {
-      this.log(`[*] ${msg}`);
+      this.log("[*] " + msg);
     }
   },
   log(msg) {
     if (is_worker()) {
-      self.postMessage({ type: "log", value: `[${self.name}]${msg}` });
-    } else {
-      if (this.console === undefined) {
-        this.console = document.getElementById("console");
-      }
-
-      this.console.append(`${msg}\n`);
-      this.console.scrollTop = this.console.scrollHeight;
-
-      const data = JSON.stringify({
-        seq: this.seq++,
-        msg: msg,
-      });
+      self.postMessage({ type: "log", value: "[" + self.name + "]" + msg });
+      return;
     }
+
+    if (this.console === undefined) {
+      var el = document.getElementById("console");
+      if (!el) {
+        el = document.createElement("pre");
+        el.id = "console";
+        el.setAttribute(
+          "style",
+          "position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;" +
+            "overflow:hidden;opacity:0;pointer-events:none;"
+        );
+        document.body.appendChild(el);
+      }
+      this.console = el;
+    }
+
+    try {
+      this.console.append(msg + "\n");
+      this.console.scrollTop = this.console.scrollHeight;
+    } catch (e) {}
+
+    this.seq++;
   },
 };
+
 const version = {
   console: undefined,
   major: undefined,
@@ -38,11 +52,9 @@ const version = {
   init() {
     const ua = navigator.userAgent;
 
-    logger.info(`Agent: ${ua}`);
-
     const matches = ua.match(/PlayStation\s+(\d+)[/ ](\d+)\.(\d+)/);
     if (matches === null) {
-      throw new Error(`${ua} not supported !!`);
+      throw new Error(ua + " not supported !!");
     }
 
     this.console = parseInt(matches[1], 10);
@@ -50,7 +62,7 @@ const version = {
     this.minor = parseInt(matches[3], 16);
   },
   toString() {
-    return `${this.major}.${this.minor.toString(16).padStart(2, "0")}`;
+    return this.major + "." + this.minor.toString(16).padStart(2, "0");
   },
 };
 //#endregion
@@ -72,12 +84,12 @@ class BInt {
             break;
           case "number":
             if (Number.isNaN(value)) {
-              throw new TypeError(`Number ${value} is NaN`);
+              throw new TypeError("Number " + value + " is NaN");
             }
 
             if (Number.isInteger(value)) {
               if (!Number.isSafeInteger(value)) {
-                throw new RangeError(`Integer ${value} outside safe 53-bit range`);
+                throw new RangeError("Integer " + value + " outside safe 53-bit range");
               }
 
               lo = value >>> 0;
@@ -96,7 +108,7 @@ class BInt {
             }
 
             if (value.length > 0x10) {
-              throw new RangeError(`String ${value} is out of range !!`);
+              throw new RangeError("String " + value + " is out of range !!");
             }
 
             value = value.padStart(16, "0");
@@ -128,7 +140,7 @@ class BInt {
             }
 
           default:
-            throw new TypeError(`Unsupported value ${value} !!`);
+            throw new TypeError("Unsupported value " + value + " !!");
         }
         break;
       case 2:
@@ -136,11 +148,11 @@ class BInt {
         lo = arguments[1];
 
         if (!Number.isInteger(hi)) {
-          throw new RangeError(`hi value ${hi} is not an integer !!`);
+          throw new RangeError("hi value " + hi + " is not an integer !!");
         }
 
         if (!Number.isInteger(lo)) {
-          throw new RangeError(`lo value ${lo} is not an integer !!`);
+          throw new RangeError("lo value " + lo + " is not an integer !!");
         }
 
         hi >>>= 0;
@@ -159,7 +171,7 @@ class BInt {
     const hi = this.hi | 0;
 
     if (hi < -0x200000 || hi > 0x1fffff) {
-      throw new RangeError(`${this} outside safe 53-bit range`);
+      throw new RangeError(this + " outside safe 53-bit range");
     }
 
     return hi * 0x100000000 + this.lo;
@@ -169,7 +181,7 @@ class BInt {
     const hi = this.hi;
 
     if (hi > 0x1fffff) {
-      throw new RangeError(`${this} outside safe 53-bit range`);
+      throw new RangeError(this + " outside safe 53-bit range");
     }
 
     return hi * 0x100000000 + this.lo;
@@ -178,7 +190,7 @@ class BInt {
   get d() {
     const hi_word = this.hi >>> 16;
     if (hi_word === 0xffff || hi_word === 0xfffe) {
-      throw new RangeError(`${this} cannot be represented as double`);
+      throw new RangeError(this + " cannot be represented as double");
     }
 
     BInt.View.setUint32(0, this.lo, true);
@@ -201,7 +213,7 @@ class BInt {
 
   getBit(idx) {
     if (idx < 0 || idx > 0x3f) {
-      throw new RangeError(`Bit ${idx} is out of range !!`);
+      throw new RangeError("Bit " + idx + " is out of range !!");
     }
 
     return (idx < 0x20 ? this.lo >>> idx : this.hi >>> (idx - 0x20)) & 1;
@@ -209,7 +221,7 @@ class BInt {
 
   setBit(idx, value) {
     if (idx < 0 || idx > 0x3f) {
-      throw new RangeError(`Bit ${idx} is out of range !!`);
+      throw new RangeError("Bit " + idx + " is out of range !!");
     }
 
     if (idx < 0x20) {
@@ -365,7 +377,7 @@ class BInt {
 
   shl(count) {
     if (count < 0 || count > 0x3f) {
-      throw new RangeError(`Shift ${count} bits out of range !!`);
+      throw new RangeError("Shift " + count + " bits out of range !!");
     }
 
     if (count === 0) {
@@ -380,7 +392,7 @@ class BInt {
 
   shr(count) {
     if (count < 0 || count > 63) {
-      throw new RangeError(`Shift ${count} bits out of range !!`);
+      throw new RangeError("Shift " + count + " bits out of range !!");
     }
 
     if (count === 0) {
@@ -435,7 +447,7 @@ Number.prototype.hex = function (padded = false, maxLength = 16) {
     str = str.padStart(maxLength, "0");
   }
 
-  return `0x${str}`;
+  return "0x" + str;
 };
 
 Number.prototype.alignUp = function (alignment) {
