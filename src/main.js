@@ -130,12 +130,14 @@ async function doJb() {
       const bin_u8 = new Uint8Array(bin_buf);
 
       load_bin(bin_u8);
+      logger.info("Payload Loaded !!");
     }
 
     logger.info("===END===");
   } catch (e) {
     logger.error(e.message);
     logger.error(e.stack);
+    logger.info("Exploit failed, shutdown your console then try again !!");
     //mem.free_all();
   }
 }
