@@ -2,7 +2,7 @@
 const NUM_REQS = 3; // 0x80 kmalloc zone since SceKernelAioRWRequest.sizeof * 3 = 0x78
 const WORKER_NUM = 2;
 const SPRAY_NUM = 0x200;
-const ATTEMPT_NUM = 0x80;
+const ATTEMPT_NUM = 0x150;
 const HANDLES_NUM = 0x100;
 const IPV6_SOCK_NUM = 0x80;
 //#endregion
